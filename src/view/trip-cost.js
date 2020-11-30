@@ -1,10 +1,6 @@
 const generateTotalPrice = (points) => {
-  console.log(points);
-  let totalPrice = 0;
-
-  for (let i = 0; i < points.length; i++) {
-    totalPrice += points[i].price;
-  };
+  const startPrice = 0;
+  const totalPrice = points.reduce((a, b) => a + b.price, startPrice);
   return totalPrice;
 };
 

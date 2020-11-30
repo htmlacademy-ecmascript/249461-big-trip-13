@@ -1,36 +1,40 @@
 import dayjs from "dayjs";
+import {MAX_VIEW_CITIES} from '../const';
 
 const generateTripRoute = (points) => {
-  const MAX_VIEW_CITIES = 3;
+  
   const cities = new Set();
   for (let i = 0; i < points.length; i++) {
     cities.add(points[i].destination);
   };
   const travelCities = Array.from(cities);
-  const countCities = travelCities.length;
   const startCity = travelCities[0];
-  const middleCity = (countCities === MAX_VIEW_CITIES) ? travelCities[1] : '...';
-  const finishCity = travelCities[countCities - 1];
+  const finishCity = travelCities[travelCities.length - 1];
 
-  return `<h1 class="trip-info__title">${startCity} &mdash; ${middleCity} &mdash; ${finishCity}</h1>`
+  if (startCity === finishCity) {
+    return `<h1 class="trip-info__title">${startCity}</h1>`;
+  } else if (startCity !== finishCity && travelCities.length < MAX_VIEW_CITIES) {
+    return `<h1 class="trip-info__title">${startCity} &mdash; ${finishCity}</h1>`;
+  } else {
+    return `<h1 class="trip-info__title">${startCity} &mdash; ${(travelCities.length === MAX_VIEW_CITIES) ? travelCities[1] : '...'} &mdash; ${finishCity}</h1>`;
+  }
 }
 
 const generateTripDates = (points) => {
-  const dates = new Set();
-  for (let i = 0; i < points.length; i++) {
-    dates.add(points[i].startDate);
-    dates.add(points[i].finishDate);
-  }
-  const datesList = Array.from(dates).sort(function(a,b) {return a - b});
-  
-  const startDate = dayjs(datesList[0]).format('MMM D');
-  let finishDate = dayjs(datesList[datesList.length - 1]).format('MMM D');
+  const startDate = dayjs(points[0].startDate);
+  let finishDate = dayjs(points[points.length - 1].finishDate);
 
-  if (dayjs(datesList[0]).format('MMM') === dayjs(datesList[datesList.length - 1]).format('MMM')) {
-    finishDate = dayjs(datesList[datesList.length - 1]).format('D')
-  }
+  if (startDate.isSame(finishDate, 'D')) {
+    return `<p class="trip-info__dates">${startDate.format('MMM D')}</p>`;
+  };
 
-  return `<p class="trip-info__dates">${startDate}&nbsp;&mdash;&nbsp;${finishDate}</p>`
+  if (finishDate.diff(startDate, 'month') > 0) {
+    finishDate = finishDate.format('MMM D');
+  } else {
+    finishDate = finishDate.format('D');
+  };
+
+  return `<p class="trip-info__dates">${startDate.format('MMM D')}&nbsp;&mdash;&nbsp;${finishDate}</p>`;
 };
 
 export const tripInfo = (points) => {

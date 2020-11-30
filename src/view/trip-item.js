@@ -1,47 +1,49 @@
 import dayjs from "dayjs";
+const duration = require('dayjs/plugin/duration');
+dayjs.extend(duration);
 
 export const pointsList = () => {
   return `<ul class="trip-events__list"></ul>`;
 }
 
-export const pointItem = (point) => {
-  const {eventType, destination, price, isFavorite, startDate, finishDate} = point;
-  const offers = () => {
-    const offers = point.offers;
-  
-    if (!offers) {
-      return '';
-    }
-  
-    const offersList = new Set();
-  
-    for (const offer of offers.values()) {
-      offersList.add(`<li class="event__offer">
-          <span class="event__offer-title">${offer.title}</span>
-          &plus;&euro;&nbsp;
-          <span class="event__offer-price">${offer.price}</span>
-        </li>`);
-    };
-    
-    const newOffersList = Array.from(offersList);
-    return newOffersList.join('');
-  };
+const offers = (point) => {
+  const offers = point.offers;
 
-  const generateDuration = () => {
-    const duration = finishDate - startDate;
-    let newDuration;
-
-    if ((dayjs(finishDate).format('D') - dayjs(startDate).format('D')) > 0) {
-      newDuration = dayjs(duration).format('D') + 'D ' + dayjs(duration).format('HH') + 'H '  + dayjs(duration).format('mm') + 'M';
-    } else if ((dayjs(finishDate).format('D') - dayjs(startDate).format('D')) || (dayjs(finishDate).format('H') - dayjs(startDate).format('H')) > 0) {
-      newDuration = dayjs(duration).format('HH') + 'H '  + dayjs(duration).format('mm') + 'M';
-    } else {
-      newDuration = dayjs(duration).format('mm') + 'M';
-    }
-
-    return newDuration;
+  if (offers.size === 0) {
+    return '';
   }
 
+  const offersList = [];
+
+  for (const offer of offers.values()) {
+    offersList.push(`<li class="event__offer">
+        <span class="event__offer-title">${offer.title}</span>
+        &plus;&euro;&nbsp;
+        <span class="event__offer-price">${offer.price}</span>
+      </li>`);
+  };
+  
+  return offersList.join('');
+};
+
+const generateDuration = (point) => {
+  const startDate = dayjs(point.startDate);
+  const finishDate = dayjs(point.finishDate);
+
+  const duration = dayjs.duration(finishDate.diff(startDate));
+
+  if (duration.get('days') > 0) {
+    return `${duration.get('days')}D ${duration.get('hours')}H ${duration.get('minutes')}M`;
+  } else if (duration.get('hours') > 0) {
+    return `${duration.get('hours')}H ${duration.get('minutes')}M`;
+  } else {
+    return `${duration.get('minutes')}M`;
+  }
+};
+
+export const pointItem = (point) => {
+  const {eventType, destination, price, isFavorite, startDate, finishDate} = point;
+  
   return `
   <li class="trip-events__item">
     <div class="event">
@@ -56,14 +58,14 @@ export const pointItem = (point) => {
           &mdash;
           <time class="event__end-time" datetime="${dayjs(finishDate).format('YYYY-MM-DTHH:mm')}">${dayjs(finishDate).format('HH:mm')}</time>
         </p>
-        <p class="event__duration">${generateDuration()}</p>
+        <p class="event__duration">${generateDuration(point)}</p>
       </div>
       <p class="event__price">
         &euro;&nbsp;<span class="event__price-value">${price}</span>
       </p>
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
-        ${offers()}
+        ${offers(point)}
       </ul>
       <button class="${(isFavorite) ? 'event__favorite-btn event__favorite-btn--active' : 'event__favorite-btn'}" type="button">
         <span class="visually-hidden">Add to favorite</span>
