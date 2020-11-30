@@ -98,19 +98,35 @@
 
 /***/ }),
 
+/***/ "./node_modules/dayjs/plugin/duration.js":
+/*!***********************************************!*\
+  !*** ./node_modules/dayjs/plugin/duration.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,s){ true?module.exports=s():undefined}(this,function(){"use strict";var t,s,n=/^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/,i={years:31536e6,months:2592e6,days:864e5,hours:36e5,minutes:6e4,seconds:1e3,milliseconds:1,weeks:6048e5},e=function(t){return t instanceof u},r=function(t,s,n){return new u(t,n,s.$l)},o=function(t){return s.p(t)+"s"},u=function(){function s(t,s,e){var u=this;if(this.$d={},this.$l=e,s)return r(t*i[o(s)],this);if("number"==typeof t)return this.$ms=t,this.parseFromMilliseconds(),this;if("object"==typeof t)return Object.keys(t).forEach(function(s){u.$d[o(s)]=t[s]}),this.calMilliseconds(),this;if("string"==typeof t){var h=t.match(n);if(h)return this.$d.years=h[2],this.$d.months=h[3],this.$d.weeks=h[4],this.$d.days=h[5],this.$d.hours=h[6],this.$d.minutes=h[7],this.$d.seconds=h[8],this.calMilliseconds(),this}return this}var u=s.prototype;return u.calMilliseconds=function(){var t=this;this.$ms=Object.keys(this.$d).reduce(function(s,n){return s+(t.$d[n]||0)*i[n]},0)},u.parseFromMilliseconds=function(){var t=this.$ms;this.$d.years=Math.floor(t/31536e6),t%=31536e6,this.$d.months=Math.floor(t/2592e6),t%=2592e6,this.$d.days=Math.floor(t/864e5),t%=864e5,this.$d.hours=Math.floor(t/36e5),t%=36e5,this.$d.minutes=Math.floor(t/6e4),t%=6e4,this.$d.seconds=Math.floor(t/1e3),t%=1e3,this.$d.milliseconds=t},u.toISOString=function(){var t=this.$d.years?this.$d.years+"Y":"",s=this.$d.months?this.$d.months+"M":"",n=+this.$d.days||0;this.$d.weeks&&(n+=7*this.$d.weeks);var i=n?n+"D":"",e=this.$d.hours?this.$d.hours+"H":"",r=this.$d.minutes?this.$d.minutes+"M":"",o=this.$d.seconds||0;this.$d.milliseconds&&(o+=this.$d.milliseconds/1e3);var u=o?o+"S":"",h="P"+t+s+i+(e||r||u?"T":"")+e+r+u;return"P"===h?"P0D":h},u.toJSON=function(){return this.toISOString()},u.as=function(t){return this.$ms/i[o(t)]},u.get=function(t){var s=this.$ms,n=o(t);return"milliseconds"===n?s%=1e3:s="weeks"===n?Math.floor(s/i[n]):this.$d[n],s},u.add=function(t,s,n){var u;return u=s?t*i[o(s)]:e(t)?t.$ms:r(t,this).$ms,r(this.$ms+u*(n?-1:1),this)},u.subtract=function(t,s){return this.add(t,s,!0)},u.locale=function(t){var s=this.clone();return s.$l=t,s},u.clone=function(){return r(this.$ms,this)},u.humanize=function(s){return t().add(this.$ms,"ms").locale(this.$l).fromNow(!s)},u.milliseconds=function(){return this.get("milliseconds")},u.asMilliseconds=function(){return this.as("milliseconds")},u.seconds=function(){return this.get("seconds")},u.asSeconds=function(){return this.as("seconds")},u.minutes=function(){return this.get("minutes")},u.asMinutes=function(){return this.as("minutes")},u.hours=function(){return this.get("hours")},u.asHours=function(){return this.as("hours")},u.days=function(){return this.get("days")},u.asDays=function(){return this.as("days")},u.weeks=function(){return this.get("weeks")},u.asWeeks=function(){return this.as("weeks")},u.months=function(){return this.get("months")},u.asMonths=function(){return this.as("months")},u.years=function(){return this.get("years")},u.asYears=function(){return this.as("years")},s}();return function(n,i,o){t=o,s=o().$utils(),o.duration=function(t,s){var n=o.locale();return r(t,{$l:n},s)},o.isDuration=e;var u=i.prototype.add,h=i.prototype.subtract;i.prototype.add=function(t,s){return e(t)&&(t=t.asMilliseconds()),u.bind(this)(t,s)},i.prototype.subtract=function(t,s){return e(t)&&(t=t.asMilliseconds()),h.bind(this)(t,s)}}});
+
+
+/***/ }),
+
 /***/ "./src/const.js":
 /*!**********************!*\
   !*** ./src/const.js ***!
   \**********************/
-/*! exports provided: TRIP_ITEMS, OFFERS, CITIES */
+/*! exports provided: MAX_VIEW_CITIES, TRIP_ITEMS, CITIES, OFFERS, DESCRIPTION_SENTENCES */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAX_VIEW_CITIES", function() { return MAX_VIEW_CITIES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TRIP_ITEMS", function() { return TRIP_ITEMS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OFFERS", function() { return OFFERS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITIES", function() { return CITIES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OFFERS", function() { return OFFERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DESCRIPTION_SENTENCES", function() { return DESCRIPTION_SENTENCES; });
+const MAX_VIEW_CITIES = 3;
 const TRIP_ITEMS = ['Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
+const CITIES = ['Amsterdam', 'Chamonix', 'Geneva'];
 
 const OFFERS = new Map([
   ['luggage', {
@@ -135,7 +151,19 @@ const OFFERS = new Map([
   }]
 ]);
 
-const CITIES = ['Amsterdam', 'Chamonix', 'Geneva'];
+const DESCRIPTION_SENTENCES = [
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  'Cras aliquet varius magna, non porta ligula feugiat eget.',
+  'Fusce tristique felis at fermentum pharetra.',
+  'Aliquam id orci ut lectus varius viverra.',
+  'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
+  'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
+  'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
+  'Sed sed nisi sed augue convallis suscipit in sed felis.',
+  'Aliquam erat volutpat.',
+  'Nunc fermentum tortor ac porta dapibus.',
+  'In rutrum ac purus sit amet tempus.'
+];
 
 /***/ }),
 
@@ -163,14 +191,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//import {editForm} from './view/edit-form.js';
 
 
 
 
 const POINT_COUNT = 15;
 const points = new Array(POINT_COUNT).fill().map(_mock_point_js__WEBPACK_IMPORTED_MODULE_7__["generatePoint"]);
-
+const pointsSortByDate = points.sort(function(a,b) {return a.startDate - b.startDate});
 
 const pageBody = document.querySelector('.page-body');
 const tripMain = pageBody.querySelector('.trip-main');
@@ -180,9 +207,9 @@ const render = (container, template, place) => {
 };
 
 // Маршрут и стоимость
-render(tripMain, Object(_view_trip_info_js__WEBPACK_IMPORTED_MODULE_0__["tripInfo"])(points), 'afterbegin');
+render(tripMain, Object(_view_trip_info_js__WEBPACK_IMPORTED_MODULE_0__["tripInfo"])(pointsSortByDate), 'afterbegin');
 const tripInfoSection = pageBody.querySelector('.trip-info');
-render(tripInfoSection, Object(_view_trip_cost_js__WEBPACK_IMPORTED_MODULE_1__["tripCost"])(points), 'beforeend');
+render(tripInfoSection, Object(_view_trip_cost_js__WEBPACK_IMPORTED_MODULE_1__["tripCost"])(pointsSortByDate), 'beforeend');
 
 // Меню и фильтр
 const tripControls = pageBody.querySelector('.trip-controls');
@@ -196,11 +223,10 @@ render(tripEvents, Object(_view_trip_item_js__WEBPACK_IMPORTED_MODULE_5__["point
 
 const pointEventsList = tripEvents.querySelector('.trip-events__list');
 for (let i = 1; i < POINT_COUNT; i++) {
-    render(pointEventsList, Object(_view_trip_item_js__WEBPACK_IMPORTED_MODULE_5__["pointItem"])(points[i]), 'beforeend');
+    render(pointEventsList, Object(_view_trip_item_js__WEBPACK_IMPORTED_MODULE_5__["pointItem"])(pointsSortByDate[i]), 'beforeend');
 }
 
-//render(pointEventsList, editForm(points[0]), 'afterbegin');
-render(pointEventsList, Object(_view_create_form_js__WEBPACK_IMPORTED_MODULE_6__["createForm"])(points[1]), 'afterbegin');
+render(pointEventsList, Object(_view_create_form_js__WEBPACK_IMPORTED_MODULE_6__["createForm"])(pointsSortByDate[1]), 'afterbegin');
 
 
 /***/ }),
@@ -230,71 +256,48 @@ const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-const generateTripItem = (items) => {
-  const randomIndex = getRandomInteger(0, items.length - 1);
-
-  return items[randomIndex];
+const getRandomItem = (items) => {
+  return items[getRandomInteger(0, items.length - 1)];
 }
 
-const generateDescription = () => {
-  const descSentences = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'Cras aliquet varius magna, non porta ligula feugiat eget.',
-    'Fusce tristique felis at fermentum pharetra.',
-    'Aliquam id orci ut lectus varius viverra.',
-    'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-    'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
-    'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
-    'Sed sed nisi sed augue convallis suscipit in sed felis.',
-    'Aliquam erat volutpat.',
-    'Nunc fermentum tortor ac porta dapibus.',
-    'In rutrum ac purus sit amet tempus.'
-  ];
+const generateDescription = (sentences) => {
+  const descriptionSentencesCount = getRandomInteger(1, 5);
+  const newDescription = new Set();
 
-  const countDescriptionSentences = getRandomInteger(1, 5);
-
-  let newDescription = new Set();
-  while (newDescription.size <= countDescriptionSentences) {
-    newDescription.add(descSentences[getRandomInteger(0, descSentences.length - 1)]);
+  while (newDescription.size <= descriptionSentencesCount) {
+    newDescription.add(sentences[getRandomInteger(0, sentences.length - 1)]);
   }
 
   const description = Array.from(newDescription);
   return description.join(' ');
 };
 
-const generateDestination = (cities) => {
-  const randomIndex = getRandomInteger(0, cities.length - 1);
-
-  return cities[randomIndex];
-};
-
 const generateOffers = (offers) => {
   const isOffer = Boolean(getRandomInteger(0,1));
+  const newOffersList = new Map();
   
   if (!isOffer) {
-    return null;
+    return newOffersList;
   }
 
   const generateOffersKeys = () => {
-    const offersKeys = new Set();
+    const offersKeys = [];
     for (const value of offers.keys()){
-      offersKeys.add(value);
+      offersKeys.push(value);
     };
-    return Array.from(offersKeys);
+    return offersKeys;
   };
 
   const offersKeys = generateOffersKeys();
   
-  const countOffers = getRandomInteger(1, offers.size);
+  const offersCount = getRandomInteger(1, offers.size);
   const newOffers = new Set();
-  while (newOffers.size < countOffers) {
+  while (newOffers.size < offersCount) {
     const randomIndex = getRandomInteger(0, offersKeys.length - 1);
     newOffers.add(offersKeys[randomIndex]);
   };
 
-  let newOffersList = new Map();
   for (let newOffer of newOffers) {
-    const value = offers.get(newOffer);
     newOffersList.set(newOffer, offers.get(newOffer));
   };
       
@@ -302,7 +305,7 @@ const generateOffers = (offers) => {
 };
 
 const generatePhotosList = () => {
-  const isPhotos = Boolean(getRandomInteger(0,1));
+  const isPhotos = Boolean(getRandomInteger(0, 1));
 
   if (!isPhotos) {
     return null;
@@ -320,31 +323,28 @@ const generatePhotosList = () => {
 
 const generateDate = () => {
   const dayGap = 7;
-
-  // начальная дата через DayGap от сегодняшней
   const startDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()().add(dayGap, 'day');
-  // Конечная дата через DayGap после старта
   const finishDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(startDate).add(dayGap, 'day');
 
   const randomStartDate = getRandomInteger(startDate, finishDate);
-  const randomFinishDate = getRandomInteger(randomStartDate, finishDate);
-
-  const pointDates = [randomStartDate, randomFinishDate];
-
-  return pointDates;
+  
+  return {
+    startDate: randomStartDate,
+    finishDate: getRandomInteger(randomStartDate, finishDate)
+  }
 }
 
 const generatePoint = () => {
   const dates = generateDate();
 
   return {
-    eventType: generateTripItem(_const_js__WEBPACK_IMPORTED_MODULE_1__["TRIP_ITEMS"]),
-    destination: generateDestination(_const_js__WEBPACK_IMPORTED_MODULE_1__["CITIES"]),
+    eventType: getRandomItem(_const_js__WEBPACK_IMPORTED_MODULE_1__["TRIP_ITEMS"]),
+    destination: getRandomItem(_const_js__WEBPACK_IMPORTED_MODULE_1__["CITIES"]),
     offers: generateOffers(_const_js__WEBPACK_IMPORTED_MODULE_1__["OFFERS"]),
-    description: generateDescription(0, 1),
+    description: generateDescription(_const_js__WEBPACK_IMPORTED_MODULE_1__["DESCRIPTION_SENTENCES"]),
     photos: generatePhotosList(),
-    startDate: dates[0],
-    finishDate: dates[1],
+    startDate: dates.startDate,
+    finishDate: dates.finishDate,
     price: getRandomInteger(20, 1200),
     isFavorite: Boolean(getRandomInteger(0,1))
   };
@@ -621,12 +621,8 @@ const sorting = () => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tripCost", function() { return tripCost; });
 const generateTotalPrice = (points) => {
-  console.log(points);
-  let totalPrice = 0;
-
-  for (let i = 0; i < points.length; i++) {
-    totalPrice += points[i].price;
-  };
+  const startPrice = 0;
+  const totalPrice = points.reduce((a, b) => a + b.price, startPrice);
   return totalPrice;
 };
 
@@ -651,39 +647,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tripInfo", function() { return tripInfo; });
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../const */ "./src/const.js");
+
 
 
 const generateTripRoute = (points) => {
-  const MAX_VIEW_CITIES = 3;
+  
   const cities = new Set();
   for (let i = 0; i < points.length; i++) {
     cities.add(points[i].destination);
   };
   const travelCities = Array.from(cities);
-  const countCities = travelCities.length;
   const startCity = travelCities[0];
-  const middleCity = (countCities === MAX_VIEW_CITIES) ? travelCities[1] : '...';
-  const finishCity = travelCities[countCities - 1];
+  const finishCity = travelCities[travelCities.length - 1];
 
-  return `<h1 class="trip-info__title">${startCity} &mdash; ${middleCity} &mdash; ${finishCity}</h1>`
+  if (startCity === finishCity) {
+    return `<h1 class="trip-info__title">${startCity}</h1>`;
+  } else if (startCity !== finishCity && travelCities.length < _const__WEBPACK_IMPORTED_MODULE_1__["MAX_VIEW_CITIES"]) {
+    return `<h1 class="trip-info__title">${startCity} &mdash; ${finishCity}</h1>`;
+  } else {
+    return `<h1 class="trip-info__title">${startCity} &mdash; ${(travelCities.length === _const__WEBPACK_IMPORTED_MODULE_1__["MAX_VIEW_CITIES"]) ? travelCities[1] : '...'} &mdash; ${finishCity}</h1>`;
+  }
 }
 
 const generateTripDates = (points) => {
-  const dates = new Set();
-  for (let i = 0; i < points.length; i++) {
-    dates.add(points[i].startDate);
-    dates.add(points[i].finishDate);
-  }
-  const datesList = Array.from(dates).sort(function(a,b) {return a - b});
-  
-  const startDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(datesList[0]).format('MMM D');
-  let finishDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(datesList[datesList.length - 1]).format('MMM D');
+  const startDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(points[0].startDate);
+  let finishDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(points[points.length - 1].finishDate);
 
-  if (dayjs__WEBPACK_IMPORTED_MODULE_0___default()(datesList[0]).format('MMM') === dayjs__WEBPACK_IMPORTED_MODULE_0___default()(datesList[datesList.length - 1]).format('MMM')) {
-    finishDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(datesList[datesList.length - 1]).format('D')
-  }
+  if (startDate.isSame(finishDate, 'D')) {
+    return `<p class="trip-info__dates">${startDate.format('MMM D')}</p>`;
+  };
 
-  return `<p class="trip-info__dates">${startDate}&nbsp;&mdash;&nbsp;${finishDate}</p>`
+  if (finishDate.diff(startDate, 'month') > 0) {
+    finishDate = finishDate.format('MMM D');
+  } else {
+    finishDate = finishDate.format('D');
+  };
+
+  return `<p class="trip-info__dates">${startDate.format('MMM D')}&nbsp;&mdash;&nbsp;${finishDate}</p>`;
 };
 
 const tripInfo = (points) => {
@@ -713,49 +714,51 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_0__);
 
+const duration = __webpack_require__(/*! dayjs/plugin/duration */ "./node_modules/dayjs/plugin/duration.js");
+dayjs__WEBPACK_IMPORTED_MODULE_0___default.a.extend(duration);
 
 const pointsList = () => {
   return `<ul class="trip-events__list"></ul>`;
 }
 
-const pointItem = (point) => {
-  const {eventType, destination, price, isFavorite, startDate, finishDate} = point;
-  const offers = () => {
-    const offers = point.offers;
-  
-    if (!offers) {
-      return '';
-    }
-  
-    const offersList = new Set();
-  
-    for (const offer of offers.values()) {
-      offersList.add(`<li class="event__offer">
-          <span class="event__offer-title">${offer.title}</span>
-          &plus;&euro;&nbsp;
-          <span class="event__offer-price">${offer.price}</span>
-        </li>`);
-    };
-    
-    const newOffersList = Array.from(offersList);
-    return newOffersList.join('');
-  };
+const offers = (point) => {
+  const offers = point.offers;
 
-  const generateDuration = () => {
-    const duration = finishDate - startDate;
-    let newDuration;
-
-    if ((dayjs__WEBPACK_IMPORTED_MODULE_0___default()(finishDate).format('D') - dayjs__WEBPACK_IMPORTED_MODULE_0___default()(startDate).format('D')) > 0) {
-      newDuration = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(duration).format('D') + 'D ' + dayjs__WEBPACK_IMPORTED_MODULE_0___default()(duration).format('HH') + 'H '  + dayjs__WEBPACK_IMPORTED_MODULE_0___default()(duration).format('mm') + 'M';
-    } else if ((dayjs__WEBPACK_IMPORTED_MODULE_0___default()(finishDate).format('D') - dayjs__WEBPACK_IMPORTED_MODULE_0___default()(startDate).format('D')) || (dayjs__WEBPACK_IMPORTED_MODULE_0___default()(finishDate).format('H') - dayjs__WEBPACK_IMPORTED_MODULE_0___default()(startDate).format('H')) > 0) {
-      newDuration = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(duration).format('HH') + 'H '  + dayjs__WEBPACK_IMPORTED_MODULE_0___default()(duration).format('mm') + 'M';
-    } else {
-      newDuration = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(duration).format('mm') + 'M';
-    }
-
-    return newDuration;
+  if (offers.size === 0) {
+    return '';
   }
 
+  const offersList = [];
+
+  for (const offer of offers.values()) {
+    offersList.push(`<li class="event__offer">
+        <span class="event__offer-title">${offer.title}</span>
+        &plus;&euro;&nbsp;
+        <span class="event__offer-price">${offer.price}</span>
+      </li>`);
+  };
+  
+  return offersList.join('');
+};
+
+const generateDuration = (point) => {
+  const startDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(point.startDate);
+  const finishDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(point.finishDate);
+
+  const duration = dayjs__WEBPACK_IMPORTED_MODULE_0___default.a.duration(finishDate.diff(startDate));
+
+  if (duration.get('days') > 0) {
+    return `${duration.get('days')}D ${duration.get('hours')}H ${duration.get('minutes')}M`;
+  } else if (duration.get('hours') > 0) {
+    return `${duration.get('hours')}H ${duration.get('minutes')}M`;
+  } else {
+    return `${duration.get('minutes')}M`;
+  }
+};
+
+const pointItem = (point) => {
+  const {eventType, destination, price, isFavorite, startDate, finishDate} = point;
+  
   return `
   <li class="trip-events__item">
     <div class="event">
@@ -770,14 +773,14 @@ const pointItem = (point) => {
           &mdash;
           <time class="event__end-time" datetime="${dayjs__WEBPACK_IMPORTED_MODULE_0___default()(finishDate).format('YYYY-MM-DTHH:mm')}">${dayjs__WEBPACK_IMPORTED_MODULE_0___default()(finishDate).format('HH:mm')}</time>
         </p>
-        <p class="event__duration">${generateDuration()}</p>
+        <p class="event__duration">${generateDuration(point)}</p>
       </div>
       <p class="event__price">
         &euro;&nbsp;<span class="event__price-value">${price}</span>
       </p>
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
-        ${offers()}
+        ${offers(point)}
       </ul>
       <button class="${(isFavorite) ? 'event__favorite-btn event__favorite-btn--active' : 'event__favorite-btn'}" type="button">
         <span class="visually-hidden">Add to favorite</span>
