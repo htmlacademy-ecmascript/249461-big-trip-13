@@ -1,6 +1,8 @@
 export const MAX_VIEW_CITIES = 3;
 export const TRIP_ITEMS = ['Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
 export const CITIES = ['Amsterdam', 'Chamonix', 'Geneva'];
+export const FILTERS = ['Everything', 'Future', 'Past'];
+export const SORT = ['Day', 'Event', 'Time', 'Price', 'Offers'];
 
 export const OFFERS = new Map([
   ['luggage', {

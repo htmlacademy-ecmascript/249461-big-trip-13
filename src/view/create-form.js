@@ -1,67 +1,63 @@
 import dayjs from "dayjs";
 import {TRIP_ITEMS, CITIES, OFFERS} from '../const.js';
 
-export const createForm = (point) => {
-  const {eventType, destination, price, startDate, finishDate, description, offers, photos} = point;
-  const newOffersList = offers;
-  
-  const generateEventsItems = (events) => {
-    const eventsList = [];
+const generateEventsItems = (events, eventType) => {
+  const eventsList = [];
 
-    for (let i = 0; i < events.length; i++) {
-      eventsList[i] = `
-        <div class="event__type-item">
-          <input id="event-type-${events[i].toLowerCase()}-1" class="event__type-input  visually-hidden" type="radio" name="event-type"
-            value="${events[i].toLowerCase()}" ${(events[i] === eventType) ? 'checked' : ''}>
-          <label class="event__type-label  event__type-label--${events[i].toLowerCase()}" for="event-type-${events[i].toLowerCase()}-1">${events[i]}</label>
-        </div>`
-    }
-
-    return eventsList.join('');
-  };
-
-  const generateDatalist = (array) => {
-    const list = [];
-
-    for (let i = 0; i <array.length; i++) {
-      list[i] = `<option value=${array[i]}></option>`;
-    }
-    return list.join('');
-  };
-
-  const generateOffers = (offers) => {
-    const offersList = new Set();
-
-    for (let value of offers.entries()) {
-      const key = value[0];
-      const params = value[1];
-      offersList.add(
-        `<div class="event__offer-selector">
-        ${(newOffersList) ? `<input class="event__offer-checkbox  visually-hidden" id="event-offer--${key}-1" type="checkbox"
-            name="event-offer-${key}" ${(newOffersList.get(key)) ? 'checked' : ''}>` : `<input class="event__offer-checkbox  visually-hidden" id="event-offer--${key}-1" type="checkbox"
-            name="event-offer-${key}">`}
-          <label class="event__offer-label" for="event-offer--${key}-1">
-            <span class="event__offer-title">${params.title}</span>
-            &plus;&euro;&nbsp;
-            <span class="event__offer-price">${params.price}</span>
-          </label>
-        </div>`
-      );
-    }
-
-    return Array.from(offersList).join('');
-  };
-
-  const generatePhotosList = (photos) => {
-    const photosList = [];
-    if (photos) {
-      for (let i = 0; i < photos.length; i++) {
-        photosList[i] = `<img class="event__photo" src="${photos[i]}" alt="Event photo">`
-      };
-    };
-    return photosList.join('');
+  for (let i = 0; i < events.length; i++) {
+    eventsList[i] = `
+      <div class="event__type-item">
+        <input id="event-type-${events[i].toLowerCase()}-1" class="event__type-input  visually-hidden" type="radio" name="event-type"
+          value="${events[i].toLowerCase()}" ${(events[i] === eventType) ? 'checked' : ''}>
+        <label class="event__type-label  event__type-label--${events[i].toLowerCase()}" for="event-type-${events[i].toLowerCase()}-1">${events[i]}</label>
+      </div>`
   }
 
+  return eventsList.join('');
+};
+
+const generateDatalist = (array) => {
+  const list = [];
+
+  for (let i = 0; i <array.length; i++) {
+    list[i] = `<option value=${array[i]}></option>`;
+  }
+  return list.join('');
+};
+
+const generateOffers = (offersForm, offers) => {
+  const offersList = new Set();
+  
+  for (let value of offersForm.entries()) {
+    offersList.add(
+      `<div class="event__offer-selector">
+        <input class="event__offer-checkbox  visually-hidden" id="event-offer--${value[0]}-1" type="checkbox"
+          name="event-offer-${value[0]}" ${(offers.indexOf(value[1]) !== -1) ? 'checked' : ''}>
+        <label class="event__offer-label" for="event-offer--${value[0]}-1">
+          <span class="event__offer-title">${value[1].title}</span>
+          &plus;&euro;&nbsp;
+          <span class="event__offer-price">${value[1].price}</span>
+        </label>
+      </div>`
+    );
+  }
+
+  return Array.from(offersList).join('');
+};
+
+const generatePhotosList = (photos) => {
+  const photosList = [];
+  if (photos) {
+    for (let i = 0; i < photos.length; i++) {
+      photosList[i] = `<img class="event__photo" src="${photos[i]}" alt="Event photo">`
+    };
+  };
+  return photosList.join('');
+}
+
+export const createForm = (point) => {
+  const {eventType, destination, price, startDate, finishDate, description, offers, photos} = point;
+  
   return `
   <li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -76,7 +72,7 @@ export const createForm = (point) => {
           <div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>
-              ${generateEventsItems(TRIP_ITEMS)}
+              ${generateEventsItems(TRIP_ITEMS, eventType)}
             </fieldset>
           </div>
         </div>
@@ -118,7 +114,7 @@ export const createForm = (point) => {
           <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
           <div class="event__available-offers">
-            ${generateOffers(OFFERS)}
+            ${generateOffers(OFFERS, offers)}
           </div>
         </section>
 

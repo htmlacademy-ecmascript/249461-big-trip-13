@@ -27,35 +27,19 @@ const generateDescription = (sentences) => {
 };
 
 const generateOffers = (offers) => {
-  const isOffer = Boolean(getRandomInteger(0,1));
-  const newOffersList = new Map();
-  
-  if (!isOffer) {
-    return newOffersList;
+  const offersArray = Array.from(offers.values());
+  const offersNumbers = getRandomInteger(0, offers.size);
+
+  if (offersNumbers === 0) {
+    return [];
   }
 
-  const generateOffersKeys = () => {
-    const offersKeys = [];
-    for (const value of offers.keys()){
-      offersKeys.push(value);
-    };
-    return offersKeys;
-  };
-
-  const offersKeys = generateOffersKeys();
-  
-  const offersCount = getRandomInteger(1, offers.size);
-  const newOffers = new Set();
-  while (newOffers.size < offersCount) {
-    const randomIndex = getRandomInteger(0, offersKeys.length - 1);
-    newOffers.add(offersKeys[randomIndex]);
-  };
-
-  for (let newOffer of newOffers) {
-    newOffersList.set(newOffer, offers.get(newOffer));
-  };
-      
-  return newOffersList;
+  const offersNew = new Set();
+  while(offersNew.size < offersNumbers) {
+    const index = getRandomInteger(0, offersArray.length - 1);
+    offersNew.add(offersArray[index]);
+  }
+  return Array.from(offersNew);
 };
 
 const generatePhotosList = () => {

@@ -9,13 +9,13 @@ export const pointsList = () => {
 const offers = (point) => {
   const offers = point.offers;
 
-  if (offers.size === 0) {
+  if (offers.length === 0) {
     return '';
   }
 
   const offersList = [];
 
-  for (const offer of offers.values()) {
+  for (const offer of offers) {
     offersList.push(`<li class="event__offer">
         <span class="event__offer-title">${offer.title}</span>
         &plus;&euro;&nbsp;
