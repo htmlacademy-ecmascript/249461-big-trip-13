@@ -1,13 +1,12 @@
 import {SORT} from '../const.js';
 
 const generateSorting = (sorting) => {
-  const defaultActive = sorting[0];
   const sortList = [];
-  for (const sort of sorting) {
+  for (const sort of sorting.values()) {
     sortList.push(
-    `<div class="trip-sort__item  trip-sort__item--${sort.toLowerCase()}">
-      <input id="sort-${sort.toLowerCase()}" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-${sort.toLowerCase()}" ${(sort === defaultActive) ? 'checked' : ''}>
-      <label class="trip-sort__btn" for="sort-${sort.toLowerCase()}">${sort.toLowerCase()}</label>
+    `<div class="trip-sort__item  trip-sort__item--${sort.title.toLowerCase()}">
+      <input id="sort-${sort.title.toLowerCase()}" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-${sort.title.toLowerCase()}" ${(sort.active) ? 'checked' : ''}>
+      <label class="trip-sort__btn" for="sort-${sort.title.toLowerCase()}">${sort.title}</label>
     </div>`);
   }
 

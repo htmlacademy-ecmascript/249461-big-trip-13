@@ -1,14 +1,13 @@
 import {FILTERS} from '../const.js';
 
 const generateFilter = (filters) => {
-  const defaultActiveFilter = filters[0];
   const filtersList = [];
   for (const filter of filters) {
     filtersList.push(
       `<div class="trip-filters__filter">
-        <input id="filter-${filter.toLowerCase()}" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter"
-          value="${filter.toLowerCase()}" ${(filter === defaultActiveFilter) ? 'checked' : ''}>
-        <label class="trip-filters__filter-label" for="filter-${filter.toLowerCase()}">${filter}</label>
+        <input id="filter-${filter.title.toLowerCase()}" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter"
+          value="${filter.title.toLowerCase()}" ${(filter.active) ? 'checked' : ''}>
+        <label class="trip-filters__filter-label" for="filter-${filter.title.toLowerCase()}">${filter.title}</label>
       </div>`);
   }
 

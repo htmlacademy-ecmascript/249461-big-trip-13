@@ -1,8 +1,51 @@
 export const MAX_VIEW_CITIES = 3;
 export const TRIP_ITEMS = ['Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
 export const CITIES = ['Amsterdam', 'Chamonix', 'Geneva'];
-export const FILTERS = ['Everything', 'Future', 'Past'];
-export const SORT = ['Day', 'Event', 'Time', 'Price', 'Offers'];
+
+export const MENU = [
+  {
+    title: 'Table',
+    active: true
+  },{
+    title: 'Stats',
+    active: false
+  }
+];
+
+export const FILTERS = [
+  {
+    title: 'Everything',
+    active: true
+  },{
+    title: 'Future',
+    active: false
+  },{
+    title: 'Past',
+    active: false
+  }
+];
+
+export const SORT = [
+  {
+    title: 'Day',
+    active: true
+  },
+  {
+    title: 'Event',
+    active: false
+  },
+  {
+    title: 'Time',
+    active: false
+  },
+  {
+    title: 'Price',
+    active: false
+  },
+  {
+    title: 'Offers',
+    active: false
+  }];
 
 export const OFFERS = new Map([
   ['luggage', {
