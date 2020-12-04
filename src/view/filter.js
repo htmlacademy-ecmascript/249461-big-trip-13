@@ -1,4 +1,5 @@
 import {FILTERS} from '../const.js';
+import {createElement} from '../utils.js';
 
 const generateFilter = (filters) => {
   const filtersList = [];
@@ -14,11 +15,30 @@ const generateFilter = (filters) => {
   return filtersList.join('');
 }
 
-export const filters = () => {
-  return `
-    <h2 class="visually-hidden">Filter events</h2>
+const filters = () => {
+  return `<h2 class="visually-hidden">Filter events</h2>
     <form class="trip-filters" action="#" method="get">
       ${generateFilter(FILTERS)}
       <button class="visually-hidden" type="submit">Accept filter</button>
     </form>`;
+};
+
+export default class SiteFilters {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return filters();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
 };

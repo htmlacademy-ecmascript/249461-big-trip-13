@@ -45,7 +45,8 @@ export const SORT = [
   {
     title: 'Offers',
     active: false
-  }];
+  }
+];
 
 export const OFFERS = new Map([
   ['luggage', {

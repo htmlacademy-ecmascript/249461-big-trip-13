@@ -1,4 +1,5 @@
 import {MENU} from '../const.js';
+import {createElement} from '../utils.js';
 
 const generateSorting = (menu) => {
   const menuList = [];
@@ -11,10 +12,30 @@ const generateSorting = (menu) => {
   return menuList.join('');
 }
 
-export const menu = () => {
-  return `
-    <h2 class="visually-hidden">Switch trip view</h2>
+const createMenu = () => {
+  return `<h2 class="visually-hidden">Switch trip view</h2>
     <nav class="trip-controls__trip-tabs  trip-tabs">
       ${generateSorting(MENU)}
     </nav>`;
+};
+
+export default class SiteMenu {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMenu();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
 };

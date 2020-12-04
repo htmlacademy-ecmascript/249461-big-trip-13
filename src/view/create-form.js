@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import {createElement} from '../utils.js';
 import {TRIP_ITEMS, CITIES, OFFERS} from '../const.js';
 
 const generateEventsItems = (events, eventType) => {
@@ -55,11 +56,10 @@ const generatePhotosList = (photos) => {
   return photosList.join('');
 }
 
-export const createForm = (point) => {
+const createForm = (point) => {
   const {eventType, destination, price, startDate, finishDate, description, offers, photos} = point;
   
-  return `
-  <li class="trip-events__item">
+  return `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
       <header class="event__header">
         <div class="event__type-wrapper">
@@ -131,4 +131,25 @@ export const createForm = (point) => {
       </section>
     </form>
   </li>`;
+};
+
+export default class CreateForm {
+  constructor(points) {
+    this._points = points;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createForm(this._points);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
 };
