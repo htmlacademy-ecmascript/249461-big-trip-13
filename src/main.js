@@ -50,10 +50,9 @@ const renderPoint = (pointListElement, point) => {
 
 const tripEvents = pageBody.querySelector('.trip-events');
 render(tripEvents, new SiteSorting().getElement(), RenderPosition.BEFOREEND);
-render(tripEvents, new PointsList().getElement(), RenderPosition.BEFOREEND);
-
-const pointEventsList = tripEvents.querySelector('.trip-events__list');
+const pointsList = new PointsList();
+render(tripEvents, pointsList.getElement(), RenderPosition.BEFOREEND);
 for (let i = 0; i < POINT_COUNT; i++) {
-  renderPoint(pointEventsList, pointsSortByDate[i]);
+  renderPoint(pointsList.getElement(), pointsSortByDate[i]);
 }
 
