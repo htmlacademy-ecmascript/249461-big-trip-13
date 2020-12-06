@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
+import {createElement} from '../utils.js';
 import {MAX_VIEW_CITIES} from '../const';
+
 
 const generateTripRoute = (points) => {
   
@@ -37,13 +39,33 @@ const generateTripDates = (points) => {
   return `<p class="trip-info__dates">${startDate.format('MMM D')}&nbsp;&mdash;&nbsp;${finishDate}</p>`;
 };
 
-export const tripInfo = (points) => {
-  return `
-    <section class="trip-main__trip-info  trip-info">
-      <div class="trip-info__main">
-        ${generateTripRoute(points)}
+const tripInfo = (points) => {
+  return `<section class="trip-main__trip-info  trip-info">
+    <div class="trip-info__main">
+      ${generateTripRoute(points)}
 
-        ${generateTripDates(points)}
-      </div>
-    </section>`;
+      ${generateTripDates(points)}
+    </div>
+  </section>`;
+};
+
+export default class TripInfo {
+  constructor(points) {
+    this._points = points;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return tripInfo(this._points);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
 };

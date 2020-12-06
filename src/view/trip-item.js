@@ -1,21 +1,18 @@
 import dayjs from "dayjs";
 const duration = require('dayjs/plugin/duration');
 dayjs.extend(duration);
-
-export const pointsList = () => {
-  return `<ul class="trip-events__list"></ul>`;
-}
+import {createElement} from '../utils.js';
 
 const offers = (point) => {
   const offers = point.offers;
 
-  if (offers.size === 0) {
+  if (offers.length === 0) {
     return '';
   }
 
   const offersList = [];
 
-  for (const offer of offers.values()) {
+  for (const offer of offers) {
     offersList.push(`<li class="event__offer">
         <span class="event__offer-title">${offer.title}</span>
         &plus;&euro;&nbsp;
@@ -41,11 +38,10 @@ const generateDuration = (point) => {
   }
 };
 
-export const pointItem = (point) => {
+const pointItem = (point) => {
   const {eventType, destination, price, isFavorite, startDate, finishDate} = point;
   
-  return `
-  <li class="trip-events__item">
+  return `<li class="trip-events__item">
     <div class="event">
       <time class="event__date" datetime="${dayjs(startDate).format('YYYY-MM-D')}">${dayjs(startDate).format('D MMM')}</time>
       <div class="event__type">
@@ -81,3 +77,23 @@ export const pointItem = (point) => {
   </li>`;
 };
 
+export default class PoinItem {
+  constructor(points) {
+    this._points = points;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return pointItem(this._points);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+};

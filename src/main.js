@@ -1,13 +1,13 @@
-import {tripInfo} from './view/trip-info.js';
-import {tripCost} from './view/trip-cost.js';
-import {menu} from './view/menu.js';
-import {filters} from './view/filter.js';
-import {sorting} from './view/sort.js';
-import {pointsList} from './view/trip-item.js';
-import {pointItem} from './view/trip-item.js';
-import {createForm} from './view/create-form.js';
-
+import TripInfo from './view/trip-info.js';
+import TripCost from './view/trip-cost.js';
+import SiteMenuView from './view/menu.js';
+import SiteFilters from './view/filter.js';
+import SiteSorting from './view/sort.js';
+import PointsList from './view/trip-items-list.js';
+import PoinItem from './view/trip-item.js';
+import CreateForm from './view/create-form.js';
 import {generatePoint} from './mock/point.js';
+import {render, RenderPosition} from './utils.js';
 
 const POINT_COUNT = 15;
 const points = new Array(POINT_COUNT).fill().map(generatePoint);
@@ -16,28 +16,43 @@ const pointsSortByDate = points.sort(function(a,b) {return a.startDate - b.start
 const pageBody = document.querySelector('.page-body');
 const tripMain = pageBody.querySelector('.trip-main');
 
-const render = (container, template, place) => {
-    container.insertAdjacentHTML(place, template);
+render(tripMain, new TripInfo(pointsSortByDate).getElement(), RenderPosition.AFTERBEGIN);
+const tripInfoSection = pageBody.querySelector('.trip-info');
+render(tripInfoSection, new TripCost(pointsSortByDate).getElement(), RenderPosition.BEFOREEND);
+
+const tripControls = pageBody.querySelector('.trip-controls');
+render(tripControls, new SiteMenuView().getElement(), RenderPosition.BEFOREEND);
+render(tripControls, new SiteFilters().getElement(), RenderPosition.BEFOREEND);
+
+const renderPoint = (pointListElement, point) => {
+  const pointItem = new PoinItem(point);
+  const pointEditItem = new CreateForm(point);
+
+  const replaceToEditForm = () => {
+    pointListElement.replaceChild(pointEditItem.getElement(), pointItem.getElement());
+  };
+
+  const replaceToPointItem = () => {
+    pointListElement.replaceChild(pointItem.getElement(), pointEditItem.getElement());
+  };
+
+  pointItem.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+    replaceToEditForm();
+  });
+
+  pointEditItem.getElement().querySelector('form').addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    replaceToPointItem();
+  });
+
+  render(pointListElement, pointItem.getElement(), RenderPosition.BEFOREEND);
 };
 
-// Маршрут и стоимость
-render(tripMain, tripInfo(pointsSortByDate), 'afterbegin');
-const tripInfoSection = pageBody.querySelector('.trip-info');
-render(tripInfoSection, tripCost(pointsSortByDate), 'beforeend');
-
-// Меню и фильтр
-const tripControls = pageBody.querySelector('.trip-controls');
-render(tripControls, menu(), 'beforeend');
-render(tripControls, filters(), 'beforeend');
-
-// Сортировка и основной контент
 const tripEvents = pageBody.querySelector('.trip-events');
-render(tripEvents, sorting(), 'beforeend');
-render(tripEvents, pointsList(), 'beforeend');
-
-const pointEventsList = tripEvents.querySelector('.trip-events__list');
-for (let i = 1; i < POINT_COUNT; i++) {
-    render(pointEventsList, pointItem(pointsSortByDate[i]), 'beforeend');
+render(tripEvents, new SiteSorting().getElement(), RenderPosition.BEFOREEND);
+const pointsList = new PointsList();
+render(tripEvents, pointsList.getElement(), RenderPosition.BEFOREEND);
+for (let i = 0; i < POINT_COUNT; i++) {
+  renderPoint(pointsList.getElement(), pointsSortByDate[i]);
 }
 
-render(pointEventsList, createForm(pointsSortByDate[1]), 'afterbegin');

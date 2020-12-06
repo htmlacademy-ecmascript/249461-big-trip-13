@@ -1,29 +1,40 @@
-export const sorting = () => {
-  return `
-  <form class="trip-events__trip-sort  trip-sort" action="#" method="get">
-    <div class="trip-sort__item  trip-sort__item--day">
-      <input id="sort-day" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-day" checked>
-      <label class="trip-sort__btn" for="sort-day">Day</label>
-    </div>
+import {SORT} from '../const.js';
+import {createElement} from '../utils.js';
 
-    <div class="trip-sort__item  trip-sort__item--event">
-      <input id="sort-event" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-event" disabled>
-      <label class="trip-sort__btn" for="sort-event">Event</label>
-    </div>
+const generateSorting = (sorting) => {
+  const sortList = [];
+  for (const sort of sorting.values()) {
+    sortList.push(`<div class="trip-sort__item  trip-sort__item--${sort.title.toLowerCase()}">
+      <input id="sort-${sort.title.toLowerCase()}" class="trip-sort__input visually-hidden" type="radio" name="trip-sort" value="sort-${sort.title.toLowerCase()}" ${(sort.active) ? 'checked' : ''}>
+      <label class="trip-sort__btn" for="sort-${sort.title.toLowerCase()}">${sort.title}</label>
+    </div>`);
+  }
 
-    <div class="trip-sort__item  trip-sort__item--time">
-      <input id="sort-time" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-time">
-      <label class="trip-sort__btn" for="sort-time">Time</label>
-    </div>
+  return sortList.join('');
+}
 
-    <div class="trip-sort__item  trip-sort__item--price">
-      <input id="sort-price" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-price">
-      <label class="trip-sort__btn" for="sort-price">Price</label>
-    </div>
+const sorting = () => {
+  return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
+      ${generateSorting(SORT)}
+    </form>`;
+};
 
-    <div class="trip-sort__item  trip-sort__item--offer">
-      <input id="sort-offer" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-offer" disabled>
-      <label class="trip-sort__btn" for="sort-offer">Offers</label>
-    </div>
-  </form>`;
+export default class SiteSorting {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return sorting();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
 };
