@@ -5,13 +5,12 @@ import {TRIP_ITEMS, CITIES, OFFERS} from '../const.js';
 const generateEventsItems = (events, eventType) => {
   const eventsList = [];
 
-  for (let i = 0; i < events.length; i++) {
-    eventsList[i] = `
-      <div class="event__type-item">
-        <input id="event-type-${events[i].toLowerCase()}-1" class="event__type-input  visually-hidden" type="radio" name="event-type"
-          value="${events[i].toLowerCase()}" ${(events[i] === eventType) ? 'checked' : ''}>
-        <label class="event__type-label  event__type-label--${events[i].toLowerCase()}" for="event-type-${events[i].toLowerCase()}-1">${events[i]}</label>
-      </div>`
+  for (const event of events) {
+    eventsList.push(`<div class="event__type-item">
+        <input id="event-type-${event.toLowerCase()}-1" class="event__type-input  visually-hidden" type="radio" name="event-type"
+          value="${event.toLowerCase()}" ${(event === eventType) ? 'checked' : ''}>
+        <label class="event__type-label  event__type-label--${event.toLowerCase()}" for="event-type-${event.toLowerCase()}-1">${event}</label>
+      </div>`);
   }
 
   return eventsList.join('');
@@ -20,18 +19,17 @@ const generateEventsItems = (events, eventType) => {
 const generateDatalist = (array) => {
   const list = [];
 
-  for (let i = 0; i <array.length; i++) {
-    list[i] = `<option value=${array[i]}></option>`;
+  for (const item of array) {
+    list.push(`<option value=${item}></option>`)
   }
   return list.join('');
 };
 
 const generateOffers = (offersForm, offers) => {
-  const offersList = new Set();
+  const offersList = [];
   
   for (let value of offersForm.entries()) {
-    offersList.add(
-      `<div class="event__offer-selector">
+    offersList.push(`<div class="event__offer-selector">
         <input class="event__offer-checkbox  visually-hidden" id="event-offer--${value[0]}-1" type="checkbox"
           name="event-offer-${value[0]}" ${(offers.indexOf(value[1]) !== -1) ? 'checked' : ''}>
         <label class="event__offer-label" for="event-offer--${value[0]}-1">
@@ -39,18 +37,17 @@ const generateOffers = (offersForm, offers) => {
           &plus;&euro;&nbsp;
           <span class="event__offer-price">${value[1].price}</span>
         </label>
-      </div>`
-    );
+      </div>`);
   }
 
-  return Array.from(offersList).join('');
+  return offersList.join('');
 };
 
 const generatePhotosList = (photos) => {
   const photosList = [];
   if (photos) {
-    for (let i = 0; i < photos.length; i++) {
-      photosList[i] = `<img class="event__photo" src="${photos[i]}" alt="Event photo">`
+    for (const photo of photos) {
+      photosList.push(`<img class="event__photo" src="${photo}" alt="Event photo">`);
     };
   };
   return photosList.join('');

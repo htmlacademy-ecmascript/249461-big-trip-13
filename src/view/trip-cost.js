@@ -3,6 +3,7 @@ import {createElement} from '../utils.js';
 const generateTotalPrice = (points) => {
   const startPrice = 0;
   const totalPrice = points.reduce((a, b) => a + b.price, startPrice);
+  
   return totalPrice;
 };
 
