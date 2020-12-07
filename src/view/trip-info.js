@@ -6,9 +6,10 @@ import {MAX_VIEW_CITIES} from '../const';
 const generateTripRoute = (points) => {
   
   const cities = new Set();
-  for (let i = 0; i < points.length; i++) {
-    cities.add(points[i].destination);
+  for (const point of points) {
+    cities.add(point.destination);
   };
+
   const travelCities = Array.from(cities);
   const startCity = travelCities[0];
   const finishCity = travelCities[travelCities.length - 1];
