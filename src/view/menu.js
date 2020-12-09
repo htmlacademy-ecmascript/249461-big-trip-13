@@ -1,5 +1,5 @@
 import {MENU} from '../const.js';
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract.js';
 
 const generateSorting = (menu) => {
   const menuList = [];
@@ -10,7 +10,7 @@ const generateSorting = (menu) => {
   }
 
   return menuList.join('');
-}
+};
 
 const createMenu = () => {
   return `<h2 class="visually-hidden">Switch trip view</h2>
@@ -19,23 +19,8 @@ const createMenu = () => {
     </nav>`;
 };
 
-export default class SiteMenu {
-  constructor() {
-    this._element = null;
-  }
-
+export default class SiteMenu extends AbstractComponent {
   getTemplate() {
     return createMenu();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 };

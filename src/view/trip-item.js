@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 const duration = require('dayjs/plugin/duration');
 dayjs.extend(duration);
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract.js';
 
 const offers = (point) => {
   const offers = point.offers;
@@ -77,23 +77,13 @@ const pointItem = (point) => {
   </li>`;
 };
 
-export default class PoinItem {
+export default class PoinItem extends AbstractComponent {
   constructor(points) {
+    super();
     this._points = points;
-    this._element = null;
   }
 
   getTemplate() {
     return pointItem(this._points);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 };
