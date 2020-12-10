@@ -81,9 +81,20 @@ export default class PoinItem extends AbstractComponent {
   constructor(points) {
     super();
     this._points = points;
+    this._editPointHandler = this._editPointHandler.bind(this);
   }
 
   getTemplate() {
     return pointItem(this._points);
+  }
+
+  _editPointHandler(evt) {
+    evt.preventDefault();
+    this._callback.editButton();
+  }
+
+  setEditPointHandler(callback) {
+    this._callback.editButton = callback;
+    this.getElement().querySelector('.event__rollup-btn').addEventListener('click', this._editPointHandler);
   }
 };
