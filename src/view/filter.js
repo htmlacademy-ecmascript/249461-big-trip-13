@@ -23,7 +23,7 @@ const filters = () => {
     </form>`;
 };
 
-export default class SiteFilters extends AbstractComponent {
+export default class Filters extends AbstractComponent {
   getTemplate() {
     return filters();
   }

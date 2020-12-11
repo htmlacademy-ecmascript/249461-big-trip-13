@@ -77,7 +77,7 @@ const pointItem = (point) => {
   </li>`;
 };
 
-export default class PoinItem extends AbstractComponent {
+export default class TripItem extends AbstractComponent {
   constructor(points) {
     super();
     this._points = points;

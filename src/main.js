@@ -1,11 +1,11 @@
 import TripInfo from './view/trip-info.js';
 import TripCost from './view/trip-cost.js';
-import SiteMenuView from './view/menu.js';
-import SiteFilters from './view/filter.js';
-import SiteSorting from './view/sort.js';
-import PointsList from './view/trip-items-list.js';
+import Menu from './view/menu.js';
+import Filters from './view/filter.js';
+import Sorting from './view/sort.js';
+import TripItemsList from './view/trip-items-list.js';
 import NoPoints from './view/no-point.js';
-import PoinItem from './view/trip-item.js';
+import TripItem from './view/trip-item.js';
 import CreateForm from './view/create-form.js';
 import {generatePoint} from './mock/point.js';
 import {render, RenderPosition, replace} from './utils.js';
@@ -18,12 +18,12 @@ const pageBody = document.querySelector('.page-body');
 
 const renderHeaderControls = (mainContainer) => {
   const tripControls = mainContainer.querySelector('.trip-controls');
-  render(tripControls, new SiteMenuView, RenderPosition.BEFOREEND);
-  render(tripControls, new SiteFilters, RenderPosition.BEFOREEND);
+  render(tripControls, new Menu, RenderPosition.BEFOREEND);
+  render(tripControls, new Filters, RenderPosition.BEFOREEND);
 }
 
 const renderPoint = (pointListElement, point) => {
-  const pointItem = new PoinItem(point);
+  const pointItem = new TripItem(point);
   const pointEditItem = new CreateForm(point);
 
   const replaceToEditForm = () => {
@@ -66,16 +66,17 @@ const renderPointsLit = (mainContainer, tripPoints) => {
     const tripInfoSection = mainContainer.querySelector('.trip-info');
     render(tripInfoSection, new TripCost(tripPoints), RenderPosition.BEFOREEND);
 
-    render(tripEvents, new SiteSorting, RenderPosition.BEFOREEND);
+    render(tripEvents, new Sorting, RenderPosition.BEFOREEND);
 
-    const pointsList = new PointsList();
-    render(tripEvents, pointsList, RenderPosition.BEFOREEND);
+    const tripItemsList = new TripItemsList();
+    render(tripEvents, tripItemsList, RenderPosition.BEFOREEND);
 
     for (const point of tripPoints) {
-      renderPoint(pointsList, point);
+      renderPoint(tripItemsList, point);
     }
   }
 }
+
 
 renderHeaderControls(pageBody);
 renderPointsLit(pageBody, pointsSortByDate);

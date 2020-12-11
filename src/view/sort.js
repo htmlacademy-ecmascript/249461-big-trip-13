@@ -19,7 +19,7 @@ const sorting = () => {
     </form>`;
 };
 
-export default class SiteSorting extends AbstractComponent {
+export default class Sorting extends AbstractComponent {
   getTemplate() {
     return sorting();
   }

@@ -19,7 +19,7 @@ const createMenu = () => {
     </nav>`;
 };
 
-export default class SiteMenu extends AbstractComponent {
+export default class Menu extends AbstractComponent {
   getTemplate() {
     return createMenu();
   }

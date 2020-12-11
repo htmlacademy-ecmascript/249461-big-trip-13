@@ -41,20 +41,12 @@ export const replace = (newChild, oldChild) => {
 
   const parent = oldChild.parentElement;
 
-  if (parent === null || oldChild === null || newChild === null) {
+  if (!parent || !oldChild || !newChild) {
     throw new Error(`Can't replace unexisting elements`);
   }
 
   parent.replaceChild(newChild, oldChild);
 }
-
-export const renderTemplate = (container, template, place) => {
-  if (container instanceof AbstractComponent) {
-    container = container.getElement();
-  }
-
-  container.insertAdjacentHTML(place, template);
-};
 
 export const createElement = (template) => {
   const newElement = document.createElement('div');
