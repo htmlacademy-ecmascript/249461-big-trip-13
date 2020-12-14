@@ -1,5 +1,5 @@
 import {SORT} from '../const.js';
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract.js';
 
 const generateSorting = (sorting) => {
   const sortList = [];
@@ -11,7 +11,7 @@ const generateSorting = (sorting) => {
   }
 
   return sortList.join('');
-}
+};
 
 const sorting = () => {
   return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
@@ -19,22 +19,8 @@ const sorting = () => {
     </form>`;
 };
 
-export default class SiteSorting {
-  constructor() {
-    this._element = null;
-  }
-
+export default class Sorting extends AbstractComponent {
   getTemplate() {
     return sorting();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 };

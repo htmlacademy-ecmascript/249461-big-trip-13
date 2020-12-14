@@ -1,14 +1,14 @@
 import TripInfo from './view/trip-info.js';
 import TripCost from './view/trip-cost.js';
-import SiteMenuView from './view/menu.js';
-import SiteFilters from './view/filter.js';
-import SiteSorting from './view/sort.js';
-import PointsList from './view/trip-items-list.js';
+import Menu from './view/menu.js';
+import Filters from './view/filter.js';
+import Sorting from './view/sort.js';
+import TripItemsList from './view/trip-items-list.js';
 import NoPoints from './view/no-point.js';
-import PoinItem from './view/trip-item.js';
+import TripItem from './view/trip-item.js';
 import CreateForm from './view/create-form.js';
 import {generatePoint} from './mock/point.js';
-import {render, RenderPosition} from './utils.js';
+import {render, RenderPosition, replace} from './utils.js';
 
 const POINT_COUNT = 15;
 const points = new Array(POINT_COUNT).fill().map(generatePoint);
@@ -18,20 +18,20 @@ const pageBody = document.querySelector('.page-body');
 
 const renderHeaderControls = (mainContainer) => {
   const tripControls = mainContainer.querySelector('.trip-controls');
-  render(tripControls, new SiteMenuView().getElement(), RenderPosition.BEFOREEND);
-  render(tripControls, new SiteFilters().getElement(), RenderPosition.BEFOREEND);
+  render(tripControls, new Menu, RenderPosition.BEFOREEND);
+  render(tripControls, new Filters, RenderPosition.BEFOREEND);
 }
 
 const renderPoint = (pointListElement, point) => {
-  const pointItem = new PoinItem(point);
+  const pointItem = new TripItem(point);
   const pointEditItem = new CreateForm(point);
 
   const replaceToEditForm = () => {
-    pointListElement.replaceChild(pointEditItem.getElement(), pointItem.getElement());
+    replace(pointEditItem, pointItem);
   };
 
   const replaceToPointItem = () => {
-    pointListElement.replaceChild(pointItem.getElement(), pointEditItem.getElement());
+    replace(pointItem, pointEditItem);
   };
 
   const onEscKeyDown = (evt) => {
@@ -42,41 +42,41 @@ const renderPoint = (pointListElement, point) => {
     }
   };
 
-  pointItem.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+  pointItem.setEditPointHandler(() => {
     replaceToEditForm();
     document.addEventListener('keydown', onEscKeyDown);
   });
 
-  pointEditItem.getElement().querySelector('form').addEventListener('submit', (evt) => {
-    evt.preventDefault();
+  pointEditItem.setFormSubmitHandler(() => {
     replaceToPointItem();
     document.removeEventListener('keydown', onEscKeyDown);
   });
 
-  render(pointListElement, pointItem.getElement(), RenderPosition.BEFOREEND);
+  render(pointListElement, pointItem, RenderPosition.BEFOREEND);
 };
 
 const renderPointsLit = (mainContainer, tripPoints) => {
   const tripEvents = mainContainer.querySelector('.trip-events');
   if (points.length === 0) {
-    render(tripEvents, new NoPoints().getElement(), RenderPosition.BEFOREEND);
+    render(tripEvents, new NoPoints, RenderPosition.BEFOREEND);
   } else {
     const tripMain = mainContainer.querySelector('.trip-main');
-    render(tripMain, new TripInfo(tripPoints).getElement(), RenderPosition.AFTERBEGIN);
+    render(tripMain, new TripInfo(tripPoints), RenderPosition.AFTERBEGIN);
 
     const tripInfoSection = mainContainer.querySelector('.trip-info');
-    render(tripInfoSection, new TripCost(tripPoints).getElement(), RenderPosition.BEFOREEND);
+    render(tripInfoSection, new TripCost(tripPoints), RenderPosition.BEFOREEND);
 
-    render(tripEvents, new SiteSorting().getElement(), RenderPosition.BEFOREEND);
+    render(tripEvents, new Sorting, RenderPosition.BEFOREEND);
 
-    const pointsList = new PointsList();
-    render(tripEvents, pointsList.getElement(), RenderPosition.BEFOREEND);
+    const tripItemsList = new TripItemsList();
+    render(tripEvents, tripItemsList, RenderPosition.BEFOREEND);
 
     for (const point of tripPoints) {
-      renderPoint(pointsList.getElement(), point);
+      renderPoint(tripItemsList, point);
     }
   }
 }
+
 
 renderHeaderControls(pageBody);
 renderPointsLit(pageBody, pointsSortByDate);

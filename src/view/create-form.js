@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract.js';
 import {TRIP_ITEMS, CITIES, OFFERS} from '../const.js';
 
 const generateEventsItems = (events, eventType) => {
@@ -51,7 +51,7 @@ const generatePhotosList = (photos) => {
     };
   };
   return photosList.join('');
-}
+};
 
 const createForm = (point) => {
   const {eventType, destination, price, startDate, finishDate, description, offers, photos} = point;
@@ -130,23 +130,24 @@ const createForm = (point) => {
   </li>`;
 };
 
-export default class CreateForm {
+export default class CreateForm extends AbstractComponent {
   constructor(points) {
+    super();
     this._points = points;
-    this._element = null;
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
   }
 
   getTemplate() {
     return createForm(this._points);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
+  _formSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback.formSubmit();
   }
-  removeElement() {
-    this._element = null;
+
+  setFormSubmitHandler(callback) {
+    this._callback.formSubmit = callback;
+    this.getElement().querySelector('form').addEventListener('submit', this._formSubmitHandler);
   }
 };

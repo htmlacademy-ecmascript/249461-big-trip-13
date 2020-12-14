@@ -1,5 +1,5 @@
 import {FILTERS} from '../const.js';
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract.js';
 
 const generateFilter = (filters) => {
   const filtersList = [];
@@ -13,7 +13,7 @@ const generateFilter = (filters) => {
   }
 
   return filtersList.join('');
-}
+};
 
 const filters = () => {
   return `<h2 class="visually-hidden">Filter events</h2>
@@ -23,22 +23,8 @@ const filters = () => {
     </form>`;
 };
 
-export default class SiteFilters {
-  constructor() {
-    this._element = null;
-  }
-
+export default class Filters extends AbstractComponent {
   getTemplate() {
     return filters();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 };

@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract.js';
 import {MAX_VIEW_CITIES} from '../const';
-
 
 const generateTripRoute = (points) => {
   
@@ -21,7 +20,7 @@ const generateTripRoute = (points) => {
   } else {
     return `<h1 class="trip-info__title">${startCity} &mdash; ${(travelCities.length === MAX_VIEW_CITIES) ? travelCities[1] : '...'} &mdash; ${finishCity}</h1>`;
   }
-}
+};
 
 const generateTripDates = (points) => {
   const startDate = dayjs(points[0].startDate);
@@ -50,23 +49,13 @@ const tripInfo = (points) => {
   </section>`;
 };
 
-export default class TripInfo {
+export default class TripInfo extends AbstractComponent {
   constructor(points) {
+    super();
     this._points = points;
-    this._element = null;
   }
 
   getTemplate() {
     return tripInfo(this._points);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 };

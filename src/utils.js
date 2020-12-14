@@ -1,5 +1,5 @@
-// Функция из интернета по генерации случайного числа из диапазона
-// Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
+import AbstractComponent from './view/abstract.js';
+
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -12,20 +12,41 @@ export const RenderPosition = {
   BEFOREEND: 'beforeend'
 };
 
-export const render = (container, element, place) => {
+export const render = (container, child, place) => {
+  if (container instanceof AbstractComponent) {
+    container = container.getElement();
+  }
+
+  if (child instanceof AbstractComponent) {
+    child = child.getElement();
+  }
+
   switch (place) {
     case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
+      container.prepend(child);
       break;
     case RenderPosition.BEFOREEND:
-      container.append(element);
+      container.append(child);
       break;
   }
 };
 
-export const renderTemplate = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
+export const replace = (newChild, oldChild) => {
+  if (oldChild instanceof AbstractComponent) {
+    oldChild = oldChild.getElement();
+  }
+   if (newChild instanceof AbstractComponent) {
+    newChild = newChild.getElement();
+  }
+
+  const parent = oldChild.parentElement;
+
+  if (!parent || !oldChild || !newChild) {
+    throw new Error(`Can't replace unexisting elements`);
+  }
+
+  parent.replaceChild(newChild, oldChild);
+}
 
 export const createElement = (template) => {
   const newElement = document.createElement('div');

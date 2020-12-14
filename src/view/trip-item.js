@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 const duration = require('dayjs/plugin/duration');
 dayjs.extend(duration);
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract.js';
 
 const offers = (point) => {
   const offers = point.offers;
@@ -77,23 +77,24 @@ const pointItem = (point) => {
   </li>`;
 };
 
-export default class PoinItem {
+export default class TripItem extends AbstractComponent {
   constructor(points) {
+    super();
     this._points = points;
-    this._element = null;
+    this._editPointHandler = this._editPointHandler.bind(this);
   }
 
   getTemplate() {
     return pointItem(this._points);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
+  _editPointHandler(evt) {
+    evt.preventDefault();
+    this._callback.editButton();
   }
-  removeElement() {
-    this._element = null;
+
+  setEditPointHandler(callback) {
+    this._callback.editButton = callback;
+    this.getElement().querySelector('.event__rollup-btn').addEventListener('click', this._editPointHandler);
   }
 };
